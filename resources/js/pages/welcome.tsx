@@ -52,7 +52,8 @@ import Footer from '../components/Footer.jsx';
 // }
 export default function Welcome() {
     return (
-      <div className='bg-neutral-900 w-auto h-full'>        
+      <div className=' dark:text-white w-auto h-full
+      bg-background text-black'>        
         <NavBar />
         <div className="max-w-7xl mx-auto pt-20 px-6">
           <HeroSection />

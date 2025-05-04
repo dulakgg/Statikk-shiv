@@ -12,7 +12,7 @@ const Footer = () => {
               <li>
                 <a
                   href="link"
-                  className="text-neutral-300 hover:text-white
+                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black 
                   ">
                   link text
                 </a>
@@ -25,7 +25,7 @@ const Footer = () => {
               <li>
                 <a
                   href="link"
-                  className="text-neutral-300 hover:text-white
+                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black
                   ">
                   link text 2
                 </a>
@@ -38,7 +38,7 @@ const Footer = () => {
               <li>
                 <a
                   href="link"
-                  className="text-neutral-300 hover:text-white
+                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black
                   ">
                   link text 3
                 </a>

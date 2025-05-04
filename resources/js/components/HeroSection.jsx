@@ -4,7 +4,7 @@ const HeroSection = () => {
     return (
         <div className="flex flex-col items-center mt-6 lg:mt-20">
             <h1 className=" text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide
-            text-white
+            dark:text-white text-black
             ">
                 Lol Stats 
                 <span className="bg-gradient-to-r text-transparent bg-clip-text
@@ -15,12 +15,12 @@ const HeroSection = () => {
                 
             </h1>
             <p className="mt-10 text-lg text-center max-w-4xl
-            text-neutral-500 
+            dark:text-neutral-500 text-neutral-400
             ">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum neque eius, cupiditate consequuntur nesciunt eveniet commodi sapiente incidunt cum, explicabo quisquam eos ipsam placeat exercitationem esse ut quasi provident reiciendis!
             </p>
             <div className="flex justify-center my-10 
-            text-white
+            dark:text-white text-black
             ">
                 <a
                 href="#"

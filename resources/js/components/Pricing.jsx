@@ -3,29 +3,17 @@ import { CheckCircle2 } from "lucide-react";
 const Pricing = () => {
   return (
     <div className="mt-20">
-      <h2 className=" text-3xl sm:text-5xl lg:text-6xl text-center my-8 tracking-wide
-      text-white
+      <h2 className=" text-3xl sm:text-5xl lg:text-6xl text-center my-8 tracking-dark:wide
+      dark:text-white text-black
       ">
         Pricing
       </h2>
-      <br>
-      </br>
-      <br>
-      </br>
-      <br>
-      </br>
-      <br>
-      </br>
-      <br>
-      </br>
-      <br>
-      </br>
       <div className="flex flex-wrap">
-          <div className="w-full sm:w-1/2 lg:w-1/3 p-2 
-          text-white
+          <div className="w-full sm:w-1/2 lg:w-1/3 p-2 dark:
+          dark:text-white text-black
           ">
             <div className="p-10 border rounded-xl
-            border-neutral-700
+            border-neutral-700 
             ">
               <p className="text-4xl mb-8">
                 free
@@ -38,7 +26,7 @@ const Pricing = () => {
               <p className="mb-8">
                 <span className="text-5xl mt-6 mr-2">0$</span>
                 <span className=" tracking-tight
-                text-neutral-400
+                  dar:text-white text-black
                 ">
                   /Month
                 </span>
@@ -58,7 +46,7 @@ const Pricing = () => {
             </div>
           </div>
           <div className="w-full sm:w-1/2 lg:w-1/3 p-2 
-          text-white 
+          dark:text-white text-black
           ">
             <div className="p-10 border rounded-xl 
             border-orange-700 
@@ -74,7 +62,7 @@ const Pricing = () => {
               <p className="mb-8 ">
                 <span className="text-5xl mt-6 mr-2">2$</span>
                 <span className=" tracking-tight
-                text-neutral-400
+                dark:text-white text-black
                 ">
                   /Month
                 </span>
@@ -94,7 +82,7 @@ const Pricing = () => {
             </div>
           </div>
           <div className="w-full sm:w-1/2 lg:w-1/3 p-2 
-          text-white
+          dark:text-white text-black
           ">
             <div className="p-10 border border-neutral-700 rounded-xl ">
               <p className="text-4xl mb-8">
@@ -108,7 +96,7 @@ const Pricing = () => {
               <p className="mb-8">
                 <span className="text-5xl mt-6 mr-2">8$</span>
                 <span className=" tracking-tight
-                text-neutral-400
+                dark:text-white text-black
                 ">
                   /Month
                 </span>
