@@ -26,7 +26,7 @@ const Pricing = () => {
               <p className="mb-8">
                 <span className="text-5xl mt-6 mr-2">0$</span>
                 <span className=" tracking-tight
-                  dar:text-white text-black
+                  dark:text-white text-black
                 ">
                   /Month
                 </span>
