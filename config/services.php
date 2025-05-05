@@ -13,7 +13,9 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'riot' => [
+        'api_key' => env('RIOT_API_KEY'),
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

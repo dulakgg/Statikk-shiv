@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ProfileSearchController;
 
-use App\Http\Controllers\appController;
 
-Route::get('/kuba', [appController::class, 'index']);
+Route::get('/profile-search', [ProfileSearchController::class, 'show'])
+     ->name('profile.search');
+
 
 Route::get('/', function () {
     return Inertia::render('welcome');
