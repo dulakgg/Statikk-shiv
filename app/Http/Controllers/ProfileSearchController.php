@@ -22,6 +22,12 @@ class ProfileSearchController extends Controller
             return response()->json(['error' => 'Nie znaleziono gracza'], 404);
         }
         $puuid = $puuidResponse->json()['puuid'];
+        $summonerResponse = Http::withHeaders(['X-Riot-Token' => $apiKey])
+        ->get("https://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/$puuid");
+        if (!$summonerResponse->successful()) {
+            return response()->json(['error' => 'Nie udało się pobrać danych summoner'], 500);
+        }
+        $summonerData = $summonerResponse->json();
         $matchesResponse = Http::withHeaders(['X-Riot-Token' => $apiKey])
             ->get("https://$region.api.riotgames.com/lol/match/v5/matches/by-puuid/$puuid/ids", [
                 'start' => 0,
@@ -40,9 +46,13 @@ class ProfileSearchController extends Controller
                 $matchesDetails[] = $response->json();
             }
         }
+        
         return Inertia::render('profile', [
             'data'  => $matchesDetails,
             'puuid' => $puuid,
+            'summoner' => $summonerData,
+            'tagline' => $tagline, 
+            'nickname' => $nickname
         ]);
     }
 }
