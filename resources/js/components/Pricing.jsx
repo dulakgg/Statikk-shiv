@@ -1,4 +1,3 @@
-import { CheckCircle2 } from "lucide-react";
 
 const Pricing = () => {
   return (

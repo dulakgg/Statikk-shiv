@@ -5,7 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\ProfileSearchController;
 
 
-Route::get('/profile-search', [ProfileSearchController::class, 'show'])
+Route::get('/profile-search', [ProfileSearchController::class, 'getMatchesParallel'])
      ->name('profile.search');
 
 

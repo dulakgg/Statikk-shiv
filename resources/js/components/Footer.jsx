@@ -1,53 +1,140 @@
-import React from "react";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="mt-20 border-t py-10 
-    border-neutral-700 text-white
-    ">
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        <div>
-          <h3 className="text-md font-semibold mb-4">Resources</h3>
-          <ul className="space-y-2">
+    <footer className="bg-background border-t border-gray-700 text-gray-400 mt-16">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ">
+        {/* Link sections */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Resources
+            </h3>
+            <ul className="space-y-2">
               <li>
                 <a
-                  href="link"
-                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black 
-                  ">
-                  link text
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  Documentation
                 </a>
               </li>
-          </ul>
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  Tutorials
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Platform
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  API Reference
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  Status Page
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Community
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  Discord
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-white"
+                >
+                  Forums
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Follow Us
+            </h3>
+            <div className="flex space-x-4">
+              <a
+                href="#"
+                aria-label="Twitter"
+                className="transition-colors hover:text-white"
+              >
+                <FaXTwitter />
+              </a>
+              <a
+                href="#"
+                aria-label="GitHub"
+                className="transition-colors hover:text-white"
+              >
+                <FaGithub />
+              </a>
+              <a
+                href="#"
+                aria-label="LinkedIn"
+                className="transition-colors hover:text-white"
+              >
+                <FaLinkedin />
+              </a>
+            </div>
+          </div>
         </div>
-        <div>
-          <h3 className="text-md font-semibold mb-4">Platform</h3>
-          <ul className="space-y-2">
-              <li>
-                <a
-                  href="link"
-                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black
-                  ">
-                  link text 2
-                </a>
-              </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-md font-semibold mb-4">Community</h3>
-          <ul className="space-y-2">
-              <li>
-                <a
-                  href="link"
-                  className="dark:text-neutral-300 dark:hover:text-white text-neutral-700 hover:text-black
-                  ">
-                  link text 3
-                </a>
-              </li>
-          </ul>
+
+        {/* Bottom legal bar */}
+        <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row items-center justify-between">
+          <p className="text-sm">&copy; {new Date().getFullYear()} StatikkShiv. All rights reserved.</p>
+          <div className="mt-4 md:mt-0 flex space-x-6">
+            <a
+              href="#"
+              className="text-sm transition-colors hover:text-white"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="text-sm transition-colors hover:text-white"
+            >
+              Terms of Service
+            </a>
+            <a
+              href="#"
+              className="text-sm transition-colors hover:text-white"
+            >
+              Contact
+            </a>
+          </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
