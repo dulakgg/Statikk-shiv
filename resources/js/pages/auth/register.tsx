@@ -14,6 +14,8 @@ type RegisterForm = {
     email: string;
     password: string;
     password_confirmation: string;
+    terms: boolean;
+    tagline: string,
 };
 
 export default function Register() {
@@ -21,7 +23,9 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
+        tagline: '',
         password_confirmation: '',
+        terms: false,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -52,7 +56,22 @@ export default function Register() {
                         />
                         <InputError message={errors.name} className="mt-2" />
                     </div>
-
+                    <div className="grid gap-2">
+                        <Label htmlFor="tagline">Tag</Label>
+                        <Input
+                            id="tagline"
+                            type="text"
+                            required
+                            autoFocus
+                            tabIndex={1}
+                            autoComplete="tagline"
+                            value={data.tagline}
+                            onChange={(e) => setData('tagline', e.target.value)}
+                            disabled={processing}
+                            placeholder="LOL tagline"
+                        />
+                        <InputError message={errors.name} className="mt-2" />
+                    </div>
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email address</Label>
                         <Input
@@ -100,6 +119,29 @@ export default function Register() {
                         />
                         <InputError message={errors.password_confirmation} />
                     </div>
+                    <div className="px-4 py-3 bg-white dark:bg-gray-800 rounded-md">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                        By clicking <span className="font-semibold">“Create account”</span> you agree to our{' '}
+                        <a
+                        href="/terms-of-service"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
+                        >
+                        Terms of Service
+                        </a>
+                        {' '}and{' '}
+                        <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
+                        >
+                        Privacy Policy
+                        </a>.
+                    </p>
+                    </div>
+                    <InputError message={errors.terms} className="mt-2" />
 
                     <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}

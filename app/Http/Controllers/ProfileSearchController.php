@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileSearchController extends Controller
 {
     public function getMatchesParallel(Request $request) {
+
+        // dd(Auth::user());
         $apiKey = config('services.riot.api_key');
         $region   = $request->query('region');
         $nickname = rawurlencode($request->query('nickname'));

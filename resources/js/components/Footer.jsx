@@ -6,103 +6,102 @@ export default function Footer() {
   return (
     <footer className="bg-background border-t border-gray-700 text-gray-400 mt-16">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ">
-        {/* Link sections */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Resources
+            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
+              ipsum
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  Documentation
+                  lorem
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  Tutorials
+                  lorem
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Platform
+            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
+              ipsum
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  API Reference
+                  lorem
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  Status Page
+                  lorem
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-              Community
+            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
+              ipsum
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  Discord
+                  lorem
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  Forums
+                  lorem
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
               Follow Us
             </h3>
             <div className="flex space-x-4">
               <a
                 href="#"
                 aria-label="Twitter"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-black dark:hover:text-white"
               >
                 <FaXTwitter />
               </a>
               <a
                 href="#"
                 aria-label="GitHub"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-black dark:hover:text-white"
               >
                 <FaGithub />
               </a>
               <a
                 href="#"
                 aria-label="LinkedIn"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-black dark:hover:text-white"
               >
                 <FaLinkedin />
               </a>
@@ -115,22 +114,24 @@ export default function Footer() {
           <p className="text-sm">&copy; {new Date().getFullYear()} StatikkShiv. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <a
-              href="#"
-              className="text-sm transition-colors hover:text-white"
+              href="/privacy-policy"
+              target="_blank"
+              className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
               Privacy Policy
             </a>
             <a
-              href="#"
-              className="text-sm transition-colors hover:text-white"
+              href="/terms-of-service"
+              target="_blank"
+              className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
               Terms of Service
             </a>
             <a
-              href="#"
-              className="text-sm transition-colors hover:text-white"
+              href=""
+              className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
-              Contact
+              support@StatikkShiv.com
             </a>
           </div>
         </div>

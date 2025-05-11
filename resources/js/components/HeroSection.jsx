@@ -47,8 +47,6 @@ const HeroSection = () => {
   const [nickname, setNickname] = useState("");
   const [tagline, setTagline] = useState("");
   const [region, setRegion] = useState("na");
-
-  // Words to cycle through in the typewriter effect
   const dynamicWords = [
     "Summoners", "ADCs", "Teemo Players[*]", "Top Laners", "Jungle Players", "Mid Players", "Grinders", 
     "Grinder Kings", "Champions", "Fed Players", "Ranked Climbers", "Solo Queue Masters", 
@@ -56,9 +54,6 @@ const HeroSection = () => {
     "Legends", "Flamers", "Try hard Mids", "Clutch ADCs", "Zoned Out Players", "KDA Grinders", 
     "Ranked Climbers", "Ultimate Sweats", "Legendary Tops"
   ];
-  
-  
-
   return (
     <motion.div
       className="flex flex-col items-center mt-6 lg:mt-20"
@@ -95,7 +90,7 @@ const HeroSection = () => {
           variants={itemVariants}
           custom={2}
         />
-
+        #
         <motion.input
           name="tagline"
           value={tagline}

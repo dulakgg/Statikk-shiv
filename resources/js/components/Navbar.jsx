@@ -12,7 +12,7 @@ const Navbar = () => {
                 <div className="flex justify-between items-center">
                     <div className="flex items-center flex-shrink-0">
                         <img src="/favicon.svg" className="h-10 w-10 mr-2" alt="logo" />
-                        <span className="text-xl tracking-tight">Statikk Shiv</span>
+                        <a href="/" className="text-xl tracking-tight">Statikk Shiv</a>
                     </div>
                     <div className="flex items-center gap-4">
                         {auth?.user ? (

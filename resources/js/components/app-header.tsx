@@ -46,6 +46,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+    
     return (
         <>
             <div className="border-sidebar-border/80 border-b">

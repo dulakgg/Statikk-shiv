@@ -1,6 +1,7 @@
 import NavBar from '../components/Navbar.jsx'
 import HeroSection from '../components/HeroSection.jsx';
 import Footer from '../components/Footer.jsx';
+import CookieBanner from '../components/cookie-baner.jsx';
 
 export default function Welcome() {
   return (
@@ -8,6 +9,7 @@ export default function Welcome() {
       <NavBar />
       <main className="flex-grow flex items-center justify-center px-6">
         <HeroSection />
+        <CookieBanner />
       </main>
       <Footer />
     </div>
