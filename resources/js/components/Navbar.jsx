@@ -1,6 +1,7 @@
 import React from "react";
 import { usePage, Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import AppearanceToggleDropdown from "./appearance-dropdown";
 
 const Navbar = () => {
     const { auth } = usePage().props;
@@ -10,17 +11,22 @@ const Navbar = () => {
             <div className="container px-4 mx-auto text-sm">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center flex-shrink-0">
-                        <img className="h-10 w-10 mr-2" alt="logo" />
+                        <img src="/favicon.svg" className="h-10 w-10 mr-2" alt="logo" />
                         <span className="text-xl tracking-tight">Statikk Shiv</span>
                     </div>
                     <div className="flex items-center gap-4">
                         {auth?.user ? (
-                            <Link
-                                href={route('dashboard')}
-                                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal dark:text-white text-black hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b]"
-                            >
-                                Dashboard
-                            </Link>
+                            <>
+                                <AppearanceToggleDropdown />
+                                <Link
+                                    href={route('dashboard')}
+                                    className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal dark:text-white text-black hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b]"
+                                >
+                                    Your stats
+                                </Link>
+                                
+                            </>
+                            
                         ) : (
                             <>
                                 <Link
@@ -35,6 +41,7 @@ const Navbar = () => {
                                 >
                                     Create an account
                                 </Link>
+                                <AppearanceToggleDropdown />
                             </>
                         )}
                     </div>
