@@ -46,7 +46,7 @@ const buttonBounce = {
 const HeroSection = () => {
   const [nickname, setNickname] = useState("");
   const [tagline, setTagline] = useState("");
-  const [region, setRegion] = useState("na");
+  const [region, setRegion] = useState("eun1");
   const dynamicWords = [
     "Summoners", "ADCs", "Teemo Players[*]", "Top Laners", "Jungle Players", "Mid Players", "Grinders", 
     "Grinder Kings", "Champions", "Fed Players", "Ranked Climbers", "Solo Queue Masters", 
@@ -111,9 +111,21 @@ const HeroSection = () => {
           variants={itemVariants}
           custom={4}
         >
-          <option value="europe">EUROPE</option>
-          <option value="americas">AMERICA</option>
-          <option value="asia">ASIA</option>
+          <option value="br1">BR1</option>
+          <option value="eun1">EUN1</option>
+          <option value="euw1">EUW1</option>
+          <option value="jp1">JP1</option>
+          <option value="kr">KR</option>
+          <option value="la1">LA1</option>
+          <option value="la2">LA2</option>
+          <option value="me1">ME1</option>
+          <option value="na1">NA1</option>
+          <option value="oc1">OC1</option>
+          <option value="ru">RU</option>
+          <option value="sg2">SG2</option>
+          <option value="tr1">TR1</option>
+          <option value="tw2">TW2</option>
+          <option value="vn2">VN2</option>
         </motion.select>
 
         <motion.button

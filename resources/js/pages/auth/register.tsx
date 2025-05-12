@@ -15,7 +15,6 @@ type RegisterForm = {
     password: string;
     password_confirmation: string;
     terms: boolean;
-    tagline: string,
 };
 
 export default function Register() {
@@ -23,7 +22,6 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
-        tagline: '',
         password_confirmation: '',
         terms: false,
     });
@@ -53,22 +51,6 @@ export default function Register() {
                             onChange={(e) => setData('name', e.target.value)}
                             disabled={processing}
                             placeholder="Full name"
-                        />
-                        <InputError message={errors.name} className="mt-2" />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="tagline">Tag</Label>
-                        <Input
-                            id="tagline"
-                            type="text"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="tagline"
-                            value={data.tagline}
-                            onChange={(e) => setData('tagline', e.target.value)}
-                            disabled={processing}
-                            placeholder="LOL tagline"
                         />
                         <InputError message={errors.name} className="mt-2" />
                     </div>
