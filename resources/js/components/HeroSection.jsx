@@ -67,7 +67,7 @@ const HeroSection = () => {
         className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide dark:text-white text-black"
       >
         Lol Stats
-        <span className="bg-gradient-to-r text-transparent bg-clip-text from-orange-500 to-red-800">
+        <span className="bg-gradient-to-r text-transparent bg-clip-text from-[#64ddcd] to-[#3c8277]">
           {" "}for <Typewriter words={dynamicWords} />
         </span>
       </motion.h1>
@@ -130,7 +130,7 @@ const HeroSection = () => {
 
         <motion.button
           type="submit"
-          className="bg-gradient-to-r py-3 px-6 rounded-md transition delay-10 duration-150 ease-in-out hover:-translate-y-1 hover:scale-110 from-orange-500 to-orange-800 text-white"
+          className="bg-gradient-to-r py-3 px-6 rounded-md transition delay-10 duration-150 ease-in-out hover:-translate-y-1 hover:scale-110 from-[#64ddcd] to-[#3c8277] text-white"
           variants={buttonBounce}
           initial="initial"
           animate="animate"

@@ -25,21 +25,20 @@ const Navbar = () => {
                             <>
                                 <AppearanceToggleDropdown />
                                 <DropdownMenu>
-                                                            <DropdownMenuTrigger asChild>
-                                                                <Button variant="ghost" className="size-10 rounded-full p-1">
-                                                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                                                        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-                                                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                                                            {getInitials(auth.user.name)}
-                                                                        </AvatarFallback>
-                                                                    </Avatar>
-                                                                </Button>
-                                                            </DropdownMenuTrigger>
-                                                            <DropdownMenuContent className="w-56" align="end">
-                                                                <UserMenuContent user={auth.user} />
-                                                            </DropdownMenuContent>
-                                                        </DropdownMenu>
-
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" className="size-10 rounded-full p-1">
+                                            <Avatar className="size-8 overflow-hidden rounded-full">
+                                                <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                                    {getInitials(auth.user.name)}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="w-56" align="end">
+                                        <UserMenuContent user={auth.user} />
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </>
                             
                         ) : (
@@ -52,7 +51,7 @@ const Navbar = () => {
                                 </Link>
                                 <Link
                                     href={route('register')}
-                                    className="py-2 px-3 rounded-md transition duration-150 hover:-translate-y-1 hover:scale-105 bg-gradient-to-r from-orange-500 to-orange-800"
+                                    className="py-2 px-3 rounded-md transition duration-150 hover:-translate-y-1 hover:scale-105 bg-gradient-to-r from-[#64ddcd] to-[#3c8277]"
                                 >
                                     Create an account
                                 </Link>

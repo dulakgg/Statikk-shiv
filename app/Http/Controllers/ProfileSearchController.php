@@ -51,7 +51,7 @@ class ProfileSearchController extends Controller
         $matchesResponse = Http::withHeaders(['X-Riot-Token' => $apiKey])
             ->get("https://$cluster.api.riotgames.com/lol/match/v5/matches/by-puuid/$puuid/ids", [
                 'start' => 0,
-                'count' => 20
+                'count' => 10
             ]);
         $matchIds = $matchesResponse->json();
         $responses = Http::pool(function (Pool $pool) use ($matchIds, $apiKey, $cluster) {
@@ -66,7 +66,7 @@ class ProfileSearchController extends Controller
                 $matchesDetails[] = $response->json();
             }
         }
-        
+        // dd($matchesDetails);
         return Inertia::render('profile', [
             'data'  => $matchesDetails,
             'puuid' => $puuid,

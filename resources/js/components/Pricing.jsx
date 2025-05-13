@@ -53,7 +53,7 @@ const Pricing = () => {
               <p className="text-4xl mb-8">
                 good
                   <span className="bg-gradient-to-r  text-transparent bg-clip-text text-xl mb-4 ml-2
-                  from-orange-500 to-red-400
+                  from-[#64ddcd] to-[#3c8277]
                   ">
                     (Most Popular)
                   </span>
@@ -87,7 +87,7 @@ const Pricing = () => {
               <p className="text-4xl mb-8">
                 crazy
                   <span className="bg-gradient-to-r  text-transparent bg-clip-text text-xl mb-4 ml-2
-                  from-orange-500 to-red-400
+                  from-[#64ddcd] to-[#3c8277]
                   ">
                     (Most Powerfull)
                   </span>
