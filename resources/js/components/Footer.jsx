@@ -1,7 +1,7 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -86,15 +86,17 @@ export default function Footer() {
             </h3>
             <div className="flex space-x-4">
               <a
-                href="#"
-                aria-label="Twitter"
+                href="https://www.tiktok.com/@statikkshiv.com?lang=pl-PL"
+                aria-label="tiktok"
+                target="_blank"
                 className="transition-colors hover:text-black dark:hover:text-white"
               >
-                <FaXTwitter />
+                <FaTiktok />
               </a>
               <a
                 href="https://github.com/dulakgg/Statikk-shiv"
                 aria-label="GitHub"
+                target="_blank"
                 className="transition-colors hover:text-black dark:hover:text-white"
               >
                 <FaGithub />
@@ -102,6 +104,7 @@ export default function Footer() {
               <a
                 href="https://discord.gg/Mk7qadXD4d"
                 aria-label="Discord"
+                target="_blank"
                 className="transition-colors hover:text-black dark:hover:text-white"
               >
                 <FaDiscord />
@@ -115,21 +118,18 @@ export default function Footer() {
           <p className="text-sm">&copy; {new Date().getFullYear()} StatikkShiv. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <a
-              href="/privacy-policy"
-              target="_blank"
+              href="/privacy"
               className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
               Privacy Policy
             </a>
             <a
-              href="/terms-of-service"
-              target="_blank"
+              href="/terms"
               className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
               Terms of Service
             </a>
             <a
-              href=""
               className="text-sm transition-colors hover:text-black dark:hover:text-white"
             >
               support@StatikkShiv.com
