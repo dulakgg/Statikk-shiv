@@ -13,11 +13,6 @@ export default function Welcome() {
       <NavBar />
       <main className="flex-grow flex items-center justify-center px-6">
         <HeroSection />
-        <script
-          id="CookieDeclaration"
-          src="https://consent.cookiebot.com/a016fc49-d0d9-4622-b0ef-7cd3ca33d2ec/cd.js"
-          type="text/javascript"
-        ></script>
       </main>
       <Footer />
     </div>

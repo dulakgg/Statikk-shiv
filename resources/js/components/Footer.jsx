@@ -12,31 +12,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <section>
             <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
-              Status
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="/queue"
-                  className="transition-colors hover:text-black dark:hover:text-white"
-                >
-                  Queue Status
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/status"
-                  className="transition-colors hover:text-black dark:hover:text-white"
-                >
-                  Services status
-                </a>
-              </li>
-            </ul>
-          </section>
-
-          <section>
-            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
-              Pages
+              pages
             </h3>
             <ul className="space-y-2">
               <li>
@@ -45,6 +21,30 @@ export default function Footer() {
                   className="transition-colors hover:text-black dark:hover:text-white"
                 >
                   Hot searches
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-black dark:hover:text-white"
+                >
+                  lorem
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
+              ipsum
+            </h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="transition-colors hover:text-black dark:hover:text-white"
+                >
+                  lorem
                 </a>
               </li>
               <li>

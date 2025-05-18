@@ -4,8 +4,6 @@ use App\Http\Controllers\MatchSearchController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProfileSearchController;
-use App\Http\Controllers\RiotStatusController;
-use App\Http\Controllers\QueueStatusController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\PrivacyController;
 
@@ -14,12 +12,6 @@ Route::get('/terms', [TermsController::class, 'index'])
 
 Route::get('/privacy', [PrivacyController::class, 'index'])
     ->name('privacy');
-
-Route::get('/queue', [QueueStatusController::class, 'index'])
-    ->name('queue.status');
-
-Route::get('/status', [RiotStatusController::class, 'index'])
-    ->name('riot.status.web');
 
 Route::get('/profile-search', [ProfileSearchController::class, 'getMatchesParallel'])
      ->name('profile.search');
