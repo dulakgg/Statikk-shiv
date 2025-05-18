@@ -22,4 +22,14 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    RewriteCond %{HTTPS} !=on [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTP_HOST} ^www\.statikkshiv\.com$
+    RewriteRule ^/?$ "http\:\/\/statikkshiv\.com\/" [R=301,L]
+
 </IfModule>
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+

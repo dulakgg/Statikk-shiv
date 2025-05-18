@@ -5,6 +5,7 @@ import AppearanceToggleDropdown from "./appearance-dropdown";
 import { UserMenuContent } from "./user-menu-content";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import logo from '../assets/favicon.svg';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
 
@@ -17,7 +18,7 @@ const Navbar = () => {
             <div className="container px-4 mx-auto text-sm">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center flex-shrink-0">
-                        <img src="/favicon.svg" className="h-10 w-10 mr-2" alt="logo" />
+                        <img src={ logo } className="h-10 w-10 mr-2" alt="logo" />
                         <a href="/" className="text-xl tracking-tight"><h1>Statikk Shiv</h1></a>
                     </div>
                     <div className="flex items-center gap-4">

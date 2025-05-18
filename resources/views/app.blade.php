@@ -43,16 +43,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 background-color: oklch(0.145 0 0);
             }
         </style>
-
         <title>Statikk Shiv</title>
-
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="/favicon.svg" loading="lazy" type="image/svg+xml">
         <link rel="canonical" href="https://statikkshiv.com/" />
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-
+        <link rel="preconnect" href="https://fonts.bunny.net&display=swap">
+        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
+        <meta property="og:title" content="Statikk shiv" />
+        <meta property="og:description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
+        <meta property="og:url" content="https://Statikkshiv.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://statikkshiv.com/favicon.svg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Statikk shiv" />
+        <meta name="twitter:description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
+        <meta name="twitter:image" content="https://statikkshiv.com/favicon.png" />
+        <meta name="description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
         @routes
         <script>
             window.routes = {

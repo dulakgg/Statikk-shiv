@@ -8,6 +8,7 @@ const TermsOfService: React.FC = () => {
     <>
     <Navbar />
     <main className="bg-background text-white min-h-screen py-10 px-4">
+      <link rel="canonical" href="https://statikkshiv.com/terms" />
       <Head>
         <title>Terms of Service - Statikkshiv.com</title>
       </Head>

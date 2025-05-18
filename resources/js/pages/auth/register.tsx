@@ -105,7 +105,7 @@ export default function Register() {
                     <p className="text-sm text-gray-700 dark:text-gray-300">
                         By clicking <span className="font-semibold">“Create account”</span> you agree to our{' '}
                         <a
-                        href="/terms-of-service"
+                        href="/terms"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
@@ -114,7 +114,7 @@ export default function Register() {
                         </a>
                         {' '}and{' '}
                         <a
-                        href="/privacy-policy"
+                        href="/privacy"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:underline dark:text-blue-400 mx-1"

@@ -2,6 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Head } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
+import { clsx } from 'clsx';
+
 import { Trophy, XCircle, Zap, Skull, Heart, X } from 'lucide-react';
 
 interface Participant {
@@ -40,13 +43,16 @@ interface ProfilePageProps {
   data: MatchDetail[];
   puuid: string;
   nickname: string;
+  region: string;
   tagline: string;
   summoner: SummonerData;
+  profileiconid: string;
 }
 
-export default function Profile({ data, puuid, summoner, nickname, tagline }: ProfilePageProps) {
+export default function Profile({ data, puuid, summoner, nickname, tagline, region, profileiconid }: ProfilePageProps) {
   const [modalMatch, setModalMatch] = useState<MatchDetail | null>(null);
   const [ddragonVersion, setDdragonVersion] = useState('');
+  const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
 
   useEffect(() => {
     fetch('https://ddragon.leagueoflegends.com/api/versions.json')
@@ -60,6 +66,7 @@ export default function Profile({ data, puuid, summoner, nickname, tagline }: Pr
         setDdragonVersion('15.9.1'); // fallback version
       });
   }, []);
+
   const stats = useMemo(() => {
     let wins = 0, losses = 0, totalKills = 0, totalDeaths = 0, totalAssists = 0;
     data.forEach(match => {
@@ -83,118 +90,145 @@ export default function Profile({ data, puuid, summoner, nickname, tagline }: Pr
       ? 'Unknown Date'
       : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
+
   const formatRevisionDate = (timestamp: number) => {
-  const date = new Date(timestamp);
-  return isNaN(date.getTime())
-    ? 'Unknown'
-    : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-};
- if (!ddragonVersion) {
-    return <p className="p-10 text-center text-lg">Loading game data...</p>;
+    const date = new Date(timestamp);
+    return isNaN(date.getTime())
+      ? 'Unknown'
+      : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  };
+
+  if (!ddragonVersion) {
+    return (
+      <>
+        <p className="p-10 text-center text-lg">Loading game data...</p>
+      </>
+    );
   }
 
   const iconUrl = `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/profileicon/${summoner.profileIconId}.png`;
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-background text-gray-900 dark:text-gray-100">
-      <Head title="Statikk Shiv" />
+    <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container mx-auto pt-16 px-6 pb-12">
-        
-        {/* Profile Banner */}
-        <section className="relative rounded-2xl overflow-hidden shadow-lg mb-6">
-          <div className="h-35 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700" />
-          <div className="absolute top-8 left-6 flex items-center space-x-4">
-            <img src={iconUrl} alt={`${nickname} profile icon`} className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-900" />
-            <div>
-              <h1 className="text-2xl font-bold leading-tight">
-                {nickname} <span className="text-sm font-medium text-gray-500">#{tagline}</span>
+      <main className="container mx-auto pt-20 px-4 pb-12 max-w-7xl">
+        {/* Profile Header */}
+        <section className="relative rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 shadow-2xl overflow-hidden mb-8">
+          <div className="absolute inset-0 bg-noise opacity-10" />
+          <div className="p-6 flex items-center gap-6 relative">
+            <div className="relative">
+              <img
+                src={iconUrl}
+                alt={`${nickname} profile icon`}
+                className="w-24 h-24 rounded-2xl border-4 border-white/30 shadow-xl"
+              />
+              <div className="absolute -bottom-2 -right-2 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                Lv. {summoner.summonerLevel}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <h1 className="text-4xl font-bold text-white">
+                {nickname}
+                <span className="text-xl font-medium text-white/80 ml-2">#{tagline}</span>
               </h1>
-              <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">Level {summoner.summonerLevel}</p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                Last Updated: {formatRevisionDate(summoner.revisionDate)}
-              </p>
-              <div className="flex space-x-4 mt-2">
-                <div className="flex items-center space-x-1"><Trophy className="w-5 h-5 text-yellow-500" /><span className="text-sm font-semibold">{stats.wins}</span></div>
-                <div className="flex items-center space-x-1"><XCircle className="w-5 h-5 text-red-500" /><span className="text-sm font-semibold">{stats.losses}</span></div>
-                <div className="flex items-center space-x-1"><Zap className="w-5 h-5 text-indigo-500" /><span className="text-sm font-semibold">{stats.avgKDA}</span></div>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Trophy className="w-5 h-5 text-yellow-300" />
+                  <span className="text-white font-semibold">{stats.wins}W</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <XCircle className="w-5 h-5 text-red-300" />
+                  <span className="text-white font-semibold">{stats.losses}L</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Zap className="w-5 h-5 text-blue-300" />
+                  <span className="text-white font-semibold">{stats.avgKDA} KDA</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Recent Matches */}
-        <section className="mt-4">
-          <h2 className="text-2xl font-semibold mb-4">Recent Matches</h2>
-          <div className="space-y-6">
+        {/* Recent Matches Grid */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white/90">Recent Matches</h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
             {data.map(match => {
               const player = match.info.participants.find(p => p.puuid === puuid);
               if (!player) return null;
-              const resultIcon = player.win ? <Trophy className="w-6 h-6 text-green-500" /> : <XCircle className="w-6 h-6 text-red-500" />;
-
-              const itemIds = [
-                player.item0,
-                player.item1,
-                player.item2,
-                player.item3,
-                player.item4,
-                player.item5,
-                player.item6,
-              ].filter(id => id && id !== 0);
+              const isWin = player.win;
+              const kda = ((player.kills + player.assists) / Math.max(player.deaths, 1)).toFixed(2);
 
               return (
-                <div
+                <div 
+                onClick={() => {
+                    router.get('/match', {
+                      nickname,
+                      region: 'eun1', // or use a prop/variable if dynamic
+                      tagline,
+                      matchId: match.metadata.matchId,
+                      profileiconwow: profileiconid,
+                    });
+                  }}
                   key={match.metadata.matchId}
-                  onClick={() => setModalMatch(match)}
-                  className="group bg-white dark:bg-background rounded-xl shadow border cursor-pointer hover:ring-2 hover:ring-indigo-400"
+                  className={clsx(
+                    "group relative bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg transition-all",
+                    "hover:shadow-xl hover:-translate-y-0.5 border-2 cursor-pointer",
+                    isWin 
+                      ? "border-green-500/20 hover:border-green-500/30" 
+                      : "border-red-500/20 hover:border-red-500/30"
+                  )}
                 >
-                  
-                  <div className="flex flex-col md:flex-row">
-                    {/* Left: Result */}
-                    <div className="md:w-1/4 p-4 flex flex-col items-center justify-center bg-gray-100 dark:bg-background">
-                      {resultIcon}
-                      <p className="mt-1 font-semibold">{player.win ? 'Victory' : 'Defeat'}</p>
-                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{formatDate(player.gameEndTimestamp)}</p>
-                      <p className="text-xs mt-1 text-gray-500 dark:text-gray-400">{Math.floor(match.info.gameDuration / 60)}m {match.info.gameDuration % 60}s</p>
+                  <div className="flex gap-4 items-center">
+                    {/* Match Result */}
+                    <div className="w-20 flex flex-col items-center">
+                      <div className={clsx(
+                        "text-2xl font-black uppercase tracking-wide",
+                        isWin ? "text-green-600" : "text-red-600"
+                      )}>
+                        {isWin ? "W" : "L"}
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        {Math.floor(match.info.gameDuration / 60)}m
+                      </p>
                     </div>
 
-                    {/* Center: Champion + Stats */}
-                    <div className="flex-1 p-4 flex flex-col justify-center space-y-4">
-                      <div className="flex items-center space-x-4">
-                        <img src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${player.championName}.png`} alt={player.championName} className="w-12 h-12 rounded-md" />
-                        <div>
-                          <p className="font-semibold text-lg">{player.championName}</p>
-                          <p className="text-sm text-gray-500 uppercase">{player.role}</p>
+                    {/* Champion Info */}
+                    <div className="flex items-center gap-4 flex-1">
+                      <img
+                        src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${player.championName}.png`}
+                        alt={player.championName}
+                        className="w-14 h-14 rounded-full border-2 border-gray-200 dark:border-gray-700"
+                      />
+                      <div>
+                        <h3 className="font-bold text-lg dark:text-white">{player.championName}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-300 uppercase">
+                          {player.role.replace(/^_/, '')} • {player.kills}/{player.deaths}/{player.assists}
+                        </p>
+                        <div className="flex gap-2 mt-1">
+                          <span className={clsx(
+                            "px-2 py-1 rounded-full text-xs font-semibold",
+                            isWin ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                          )}>
+                            KDA {kda}
+                          </span>
                         </div>
-                      </div>
-                      <div className="flex items-center space-x-6">
-                        <div className="flex items-center space-x-1"><Zap className="w-5 h-5" /><span>{player.kills}</span></div>
-                        <div className="flex items-center space-x-1"><Skull className="w-5 h-5" /><span>{player.deaths}</span></div>
-                        <div className="flex items-center space-x-1"><Heart className="w-5 h-5" /><span>{player.assists}</span></div>
                       </div>
                     </div>
 
-                    {/* Right: Items & Augments */}
-                    <div className="md:w-1/4 p-4 border-l border-gray-200 dark:border-gray-700 flex flex-col justify-center space-y-2">
-                      {itemIds.length > 0 && (
-                        <div className="flex flex-wrap justify-end space-x-1 mb-2">
-                          {itemIds.map(itemId => (
-                            <img
-                              key={itemId}
-                              src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/item/${itemId}.png`}
-                              alt={`item-${itemId}`}
-                              className="w-6 h-6"
-                            />
-                          ))}
-                        </div>
-                      )}
-                      {player.augments?.length && (
-                        <div className="flex flex-wrap justify-end space-x-2">
-                          {player.augments.map((aug, idx) => (
-                            <span key={idx} className="text-xs font-medium">{aug}</span>
-                          ))}
-                        </div>
-                      )}
+                    {/* Items Grid */}
+                    <div className="hidden md:grid grid-cols-3 gap-1 w-24">
+                      {[player.item0, player.item1, player.item2, player.item3, player.item4, player.item5]
+                        .filter(id => id > 0)
+                        .map((id, i) => (
+                          <img
+                            key={i}
+                            src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/item/${id}.png`}
+                            alt={`Item ${id}`}
+                            className="w-8 h-8 rounded border border-gray-100 dark:border-gray-700"
+                          />
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -203,30 +237,51 @@ export default function Profile({ data, puuid, summoner, nickname, tagline }: Pr
           </div>
         </section>
 
-        {/* Participants Modal */}
+        {/* Match Modal */}
         {modalMatch && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-background rounded-2xl p-6 w-11/12 md:w-2/3 lg:w-1/2 relative">
-              <button onClick={() => setModalMatch(null)} className="absolute top-4 right-4">
-                <X className="w-6 h-6 text-gray-600" />
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
+              <button 
+                onClick={() => setModalMatch(null)}
+                className="absolute top-4 right-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              >
+                <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
               </button>
-              <h3 className="text-xl font-semibold mb-4">Participants</h3>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {modalMatch.info.participants.map(p => (
-                  <div key={p.puuid} className="flex flex-col items-center">
-                    <img src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${p.championName}.png`} alt={p.championName} className="w-8 h-8 rounded" />
-                    <span className="text-xs mt-1 truncate w-full text-center" title={p.summonerName}>{p.summonerName}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">{p.kills}/{p.deaths}/{p.assists}</span>
-                  </div>
-                ))}
+
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-6 dark:text-white">
+                  Match Details
+                </h3>
+
+                {/* Participants Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                  {modalMatch.info.participants.map(p => (
+                    <div
+                      key={p.puuid}
+                      className="flex flex-col items-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <img
+                        src={`https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${p.championName}.png`}
+                        alt={p.championName}
+                        className="w-12 h-12 rounded-full mb-2 border-2 border-white/20"
+                      />
+                      <span className="text-sm font-medium text-center dark:text-white">
+                        {p.summonerName}
+                      </span>
+                      <div className="flex gap-1 mt-1">
+                        <span className="text-xs text-green-600">{p.kills}</span>
+                        <span className="text-xs text-red-600">{p.deaths}</span>
+                        <span className="text-xs text-blue-600">{p.assists}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         )}
       </main>
       <Footer />
-      
     </div>
-    
   );
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MatchSearchController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProfileSearchController;
@@ -18,10 +19,13 @@ Route::get('/queue', [QueueStatusController::class, 'index'])
     ->name('queue.status');
 
 Route::get('/status', [RiotStatusController::class, 'index'])
-    ->name('riot.status');
+    ->name('riot.status.web');
 
 Route::get('/profile-search', [ProfileSearchController::class, 'getMatchesParallel'])
      ->name('profile.search');
+
+Route::get('/match', [MatchSearchController::class, 'getMatchesParallel'])
+     ->name('match.search');
 
 Route::get('/', function () {
     return Inertia::render('welcome');

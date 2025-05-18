@@ -8,6 +8,7 @@ const PrivacyPolicy: React.FC = () => {
     <>
     <Navbar />
     <main className="max-w-4xl mx-auto p-6 text-white">
+             <link rel="canonical" href="https://statikkshiv.com/privacy" />
       <Head>
         <title>Privacy Policy | Statikkshiv.com</title>
       </Head>

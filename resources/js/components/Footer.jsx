@@ -1,14 +1,16 @@
 import { FaXTwitter } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa";
-import { FaDiscord } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
+import { FaGithub, FaDiscord, FaTiktok } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t border-gray-700 text-gray-400 mt-16">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 ">
+    <footer
+      className="bg-background border-t border-gray-700 text-gray-400 mt-16"
+      role="contentinfo"
+      aria-label="Footer"
+    >
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
+          <section>
             <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
               Status
             </h3>
@@ -30,9 +32,9 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </section>
 
-          <div>
+          <section>
             <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
               Pages
             </h3>
@@ -49,14 +51,17 @@ export default function Footer() {
                 <a
                   href="#"
                   className="transition-colors hover:text-black dark:hover:text-white"
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  onClick={e => e.preventDefault()}
                 >
                   lorem
                 </a>
               </li>
             </ul>
-          </div>
+          </section>
 
-          <div>
+          <section>
             <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
               ipsum
             </h3>
@@ -65,6 +70,9 @@ export default function Footer() {
                 <a
                   href="#"
                   className="transition-colors hover:text-black dark:hover:text-white"
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  onClick={e => e.preventDefault()}
                 >
                   lorem
                 </a>
@@ -73,68 +81,104 @@ export default function Footer() {
                 <a
                   href="#"
                   className="transition-colors hover:text-black dark:hover:text-white"
+                  aria-disabled="true"
+                  tabIndex={-1}
+                  onClick={e => e.preventDefault()}
                 >
                   lorem
                 </a>
               </li>
             </ul>
-          </div>
+          </section>
 
-          <div>
+          <section>
             <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wider mb-4">
               Follow Us
             </h3>
-            <div className="flex space-x-4">
-              <a
-                href="https://www.tiktok.com/@statikkshiv.com?lang=pl-PL"
-                aria-label="tiktok"
-                target="_blank"
-                className="transition-colors hover:text-black dark:hover:text-white"
-              >
-                <FaTiktok />
-              </a>
-              <a
-                href="https://github.com/dulakgg/Statikk-shiv"
-                aria-label="GitHub"
-                target="_blank"
-                className="transition-colors hover:text-black dark:hover:text-white"
-              >
-                <FaGithub />
-              </a>
-              <a
-                href="https://discord.gg/Mk7qadXD4d"
-                aria-label="Discord"
-                target="_blank"
-                className="transition-colors hover:text-black dark:hover:text-white"
-              >
-                <FaDiscord />
-              </a>
-            </div>
-          </div>
+            <nav aria-label="Social media links">
+              <ul className="flex space-x-4">
+                <li>
+                  <a
+                    href="https://www.tiktok.com/@statikkshiv.com?lang=pl-PL"
+                    aria-label="TikTok"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
+                    <FaTiktok />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/dulakgg/Statikk-shiv"
+                    aria-label="GitHub"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
+                    <FaGithub />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://discord.gg/Mk7qadXD4d"
+                    aria-label="Discord"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
+                    <FaDiscord />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://x.com/StatikkShivs"
+                    aria-label="X"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
+                    <FaXTwitter />
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </section>
         </div>
 
         {/* Bottom legal bar */}
         <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm">&copy; {new Date().getFullYear()} StatikkShiv. All rights reserved.</p>
-          <div className="mt-4 md:mt-0 flex space-x-6">
-            <a
-              href="/privacy"
-              className="text-sm transition-colors hover:text-black dark:hover:text-white"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/terms"
-              className="text-sm transition-colors hover:text-black dark:hover:text-white"
-            >
-              Terms of Service
-            </a>
-            <a
-              className="text-sm transition-colors hover:text-black dark:hover:text-white"
-            >
-              support@StatikkShiv.com
-            </a>
-          </div>
+          <p className="text-sm" aria-label="Copyright notice">
+            &copy; {new Date().getFullYear()} StatikkShiv. All rights reserved.
+          </p>
+          <nav aria-label="Legal and support links">
+            <ul className="mt-4 md:mt-0 flex space-x-6">
+              <li>
+                <a
+                  href="/privacy"
+                  className="text-sm transition-colors hover:text-black dark:hover:text-white"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/terms"
+                  className="text-sm transition-colors hover:text-black dark:hover:text-white"
+                >
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:support@StatikkShiv.com"
+                  className="text-sm transition-colors hover:text-black dark:hover:text-white"
+                >
+                  support@StatikkShiv.com
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

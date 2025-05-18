@@ -37,27 +37,33 @@ function HotSearches() {
   }, [period]);
 
   return (
-    <div className="mt-8 max-w-lg mx-auto">
-      <div className="flex space-x-2 mb-4">
+    <section className="mt-8 max-w-lg mx-auto" aria-label="Hot searches by period">
+      <nav aria-label="Select period for hot searches" className="flex space-x-2 mb-4">
         {periods.map((p) => (
           <button
             key={p}
             onClick={() => setPeriod(p)}
-            className={`px-3 py-1 rounded-full ${
+            className={`px-3 py-1 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-1 ${
               p === period
                 ? 'bg-gradient-to-r from-[#64ddcd] to-[#3c8277] text-white'
                 : 'bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-300'
             }`}
+            aria-pressed={p === period}
+            type="button"
           >
             {p.charAt(0).toUpperCase() + p.slice(1)}
           </button>
         ))}
-      </div>
+      </nav>
 
       {loading ? (
-        <div className="text-center py-4">Loading…</div>
+        <div className="text-center py-4" role="status" aria-live="polite">
+          Loading…
+        </div>
       ) : hotList.length === 0 ? (
-        <div className="text-center py-4">No searches this {period}.</div>
+        <div className="text-center py-4" aria-live="polite">
+          No searches this {period}.
+        </div>
       ) : (
         <motion.ul
           initial="hidden"
@@ -66,7 +72,9 @@ function HotSearches() {
           className="space-y-2"
         >
           {hotList.map((entry, idx) => {
-            const url = `/profile-search?nickname=${encodeURIComponent(entry.nickname)}&tagline=${encodeURIComponent(entry.tagline)}&region=${encodeURIComponent(entry.region)}`;
+            const url = `/profile-search?nickname=${encodeURIComponent(
+              entry.nickname
+            )}&tagline=${encodeURIComponent(entry.tagline)}&region=${encodeURIComponent(entry.region)}`;
             return (
               <motion.li
                 key={`${entry.nickname}-${entry.tagline}-${entry.region}`}
@@ -78,7 +86,8 @@ function HotSearches() {
               >
                 <a
                   href={url}
-                  className="flex-grow flex justify-between items-center"
+                  className="flex-grow flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-teal-400 rounded"
+                  aria-label={`View profile of ${entry.nickname} hashtag ${entry.tagline} in region ${entry.region.toUpperCase()}, searched ${entry.count} times`}
                 >
                   <div>
                     <span className="font-semibold">{idx + 1}.</span>{' '}
@@ -92,7 +101,7 @@ function HotSearches() {
           })}
         </motion.ul>
       )}
-    </div>
+    </section>
   );
 }
 

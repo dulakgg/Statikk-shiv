@@ -20,7 +20,10 @@
         "prettier": "^3.4.2",
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.11",
-        "typescript-eslint": "^8.23.0"
+        "sharp": "^0.34.1",
+        "svgo": "^3.3.2",
+        "typescript-eslint": "^8.23.0",
+        "vite-plugin-image-optimizer": "^1.1.8"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.0",

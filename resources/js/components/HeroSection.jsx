@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// Typewriter component
+// Typewriter component (unchanged but wrapped in a <span> with aria-live)
 const Typewriter = ({ words, typingSpeed = 150, deletingSpeed = 50, pauseTime = 2500 }) => {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
@@ -25,7 +25,11 @@ const Typewriter = ({ words, typingSpeed = 150, deletingSpeed = 50, pauseTime = 
     return () => clearTimeout(timeout);
   }, [text, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseTime]);
 
-  return <>{text}</>;
+  return (
+    <span aria-live="polite" aria-atomic="true" role="text">
+      {text}
+    </span>
+  );
 };
 
 const containerVariants = {
@@ -35,28 +39,60 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  show: custom => ({ opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 10, delay: custom * 0.05 } }),
+  show: custom => ({
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 10, delay: custom * 0.05 },
+  }),
 };
 
 const buttonBounce = {
   initial: { scale: 0.8 },
-  animate: { scale: [1.1, 0.9, 1.05, 1], transition: { duration: 0.6, times: [0, 0.4, 0.8, 1], ease: "easeOut" } },
+  animate: {
+    scale: [1.1, 0.9, 1.05, 1],
+    transition: { duration: 0.6, times: [0, 0.4, 0.8, 1], ease: "easeOut" },
+  },
 };
 
 const HeroSection = () => {
   const [nickname, setNickname] = useState("");
   const [tagline, setTagline] = useState("");
   const [region, setRegion] = useState("eun1");
+
   const dynamicWords = [
-    "Summoners", "ADCs", "Teemo Players[*]", "Top Laners", "Jungle Players", "Mid Players", "Grinders", 
-    "Grinder Kings", "Champions", "Fed Players", "Ranked Climbers", "Solo Queue Masters", 
-    "Support Mains", "Carry Bots", "AFK Players", "Champion Chasers", "Pro Junglers", "Team Players", 
-    "Legends", "Flamers", "Try hard Mids", "Clutch ADCs", "Zoned Out Players", "KDA Grinders", 
-    "Ranked Climbers", "Ultimate Sweats", "Legendary Tops"
+    "Summoners",
+    "ADCs",
+    "Teemo Players[*]",
+    "Top Laners",
+    "Jungle Players",
+    "Mid Players",
+    "Grinders",
+    "Grinder Kings",
+    "Champions",
+    "Fed Players",
+    "Ranked Climbers",
+    "Solo Queue Masters",
+    "Support Mains",
+    "Carry Bots",
+    "AFK Players",
+    "Champion Chasers",
+    "Pro Junglers",
+    "Team Players",
+    "Legends",
+    "Flamers",
+    "Try hard Mids",
+    "Clutch ADCs",
+    "Zoned Out Players",
+    "KDA Grinders",
+    "Ranked Climbers",
+    "Ultimate Sweats",
+    "Legendary Tops",
   ];
+
   return (
-    <motion.div
+    <motion.section
       className="flex flex-col items-center mt-6 lg:mt-20"
+      aria-label="Hero section with search form"
       variants={containerVariants}
       initial="hidden"
       animate="show"
@@ -68,7 +104,8 @@ const HeroSection = () => {
       >
         LOL Stats
         <span className="bg-gradient-to-r text-transparent bg-clip-text from-[#64ddcd] to-[#3c8277]">
-          {" "}for <Typewriter words={dynamicWords} />
+          {" "}
+          for <Typewriter words={dynamicWords} />
         </span>
       </motion.h1>
 
@@ -78,22 +115,33 @@ const HeroSection = () => {
         className="mt-10 flex flex-col sm:flex-row items-center gap-4"
         variants={itemVariants}
         custom={1}
+        aria-label="Search summoner profile form"
       >
+        <motion.label htmlFor="nickname" className="sr-only">
+          Nickname
+        </motion.label>
         <motion.input
+          id="nickname"
           name="nickname"
           value={nickname}
-          onChange={e => setNickname(e.target.value)}
+          onChange={(e) => setNickname(e.target.value)}
           type="text"
           placeholder="Enter Nickname"
           className="px-4 py-2 rounded-md border dark:bg-neutral-900 dark:text-white dark:border-neutral-700 text-black border-neutral-300"
           required
           variants={itemVariants}
           custom={2}
+          aria-required="true"
         />
+
+        <motion.label htmlFor="tagline" className="sr-only">
+          Tagline
+        </motion.label>
         <motion.input
+          id="tagline"
           name="tagline"
           value={tagline}
-          onChange={e => setTagline(e.target.value)}
+          onChange={(e) => setTagline(e.target.value)}
           type="text"
           placeholder="Enter Tagline"
           className="px-4 py-2 rounded-md border dark:bg-neutral-900 dark:text-white dark:border-neutral-700 text-black border-neutral-300"
@@ -101,14 +149,19 @@ const HeroSection = () => {
           custom={3}
         />
 
+        <motion.label htmlFor="region" className="sr-only">
+          Region
+        </motion.label>
         <motion.select
+          id="region"
           name="region"
           value={region}
-          onChange={e => setRegion(e.target.value)}
+          onChange={(e) => setRegion(e.target.value)}
           className="px-4 py-2 rounded-md border dark:bg-neutral-900 dark:text-white dark:border-neutral-700 text-black border-neutral-300"
           required
           variants={itemVariants}
           custom={4}
+          aria-required="true"
         >
           <option value="br1">BR1</option>
           <option value="eun1">EUN1</option>
@@ -135,11 +188,12 @@ const HeroSection = () => {
           animate="animate"
           whileHover={{ scale: 1.1, y: -2 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="Search"
         >
           Search
         </motion.button>
       </motion.form>
-    </motion.div>
+    </motion.section>
   );
 };
 
