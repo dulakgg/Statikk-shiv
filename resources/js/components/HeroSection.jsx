@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Typewriter component (unchanged but wrapped in a <span> with aria-live)
+// Typewriter component (unchanged)
 const Typewriter = ({ words, typingSpeed = 150, deletingSpeed = 50, pauseTime = 2500 }) => {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
@@ -58,6 +58,7 @@ const HeroSection = () => {
   const [nickname, setNickname] = useState("");
   const [tagline, setTagline] = useState("");
   const [region, setRegion] = useState("eun1");
+  const [searching, setSearching] = useState(false);
 
   const dynamicWords = [
     "Summoners",
@@ -89,6 +90,16 @@ const HeroSection = () => {
     "Legendary Tops",
   ];
 
+  // Handle search with instant feedback
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearching(true);
+    // Simulate a short delay before actual navigation (remove setTimeout in production)
+    setTimeout(() => {
+      e.target.submit();
+    }, 1200);
+  };
+
   return (
     <motion.section
       className="flex flex-col items-center mt-6 lg:mt-20"
@@ -116,6 +127,7 @@ const HeroSection = () => {
         variants={itemVariants}
         custom={1}
         aria-label="Search summoner profile form"
+        onSubmit={handleSubmit}
       >
         <motion.label htmlFor="nickname" className="sr-only">
           Nickname
@@ -189,10 +201,45 @@ const HeroSection = () => {
           whileHover={{ scale: 1.1, y: -2 }}
           whileTap={{ scale: 0.95 }}
           aria-label="Search"
+          disabled={searching}
         >
-          Search
+          {searching ? "Searching..." : "Search"}
         </motion.button>
       </motion.form>
+
+      {/* Searching overlay like "loading more matches" but for searching match */}
+      <AnimatePresence>
+        {searching && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/40"
+          >
+            <svg className="animate-spin h-12 w-12 text-blue-600 mx-auto mb-4" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12" cy="12" r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            <p className="text-lg text-center text-white px-4">
+              Searching for the profile...<br />
+              <span className="text-sm text-gray-200">
+                This may take a second.
+              </span>
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.section>
   );
 };

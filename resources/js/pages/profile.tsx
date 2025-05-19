@@ -76,7 +76,6 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(data.length >= 10);
   const [initialLoading, setInitialLoading] = useState(true); // NEW
-  const [custom, setCustom] = useState(null);
   const pageRef = useRef(1);
 
   useEffect(() => {
@@ -90,12 +89,6 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
         setInitialLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    fetch(`/api/profile-customization/${puuid}`)
-      .then(res => res.json())
-      .then(setCustom);
-  }, [puuid]);
 
   const stats = useMemo(() => {
     let wins = 0, losses = 0, totalKills = 0, totalDeaths = 0, totalAssists = 0;
