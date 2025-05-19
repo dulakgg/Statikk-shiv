@@ -27,5 +27,11 @@ Route::get('/hot-searches', function () {
     return Inertia::render('hot-searches');
 })->name('searches');
 
+Route::get('/api/profile-matches', [ProfileSearchController::class, 'getMatchesPaginated']);
+
+Route::get('/match-search', function () {
+    return Inertia::render('matchSearch');
+})->name('match.search.page');
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

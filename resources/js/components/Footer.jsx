@@ -1,7 +1,14 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub, FaDiscord, FaTiktok } from "react-icons/fa";
+import { useContext } from "react";
+// If you have an AuthContext, import it here
+// import { AuthContext } from "../context/AuthContext";
 
 export default function Footer() {
+  // Replace this with your actual auth logic
+  // const { isLoggedIn } = useContext(AuthContext);
+  const isLoggedIn = true; // TEMP: Replace with real check
+
   return (
     <footer
       className="bg-background border-t border-gray-700 text-gray-400 mt-16"
@@ -25,12 +32,22 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/match-search"
                   className="transition-colors hover:text-black dark:hover:text-white"
                 >
-                  lorem
+                  Match Searcher
                 </a>
               </li>
+              {isLoggedIn && (
+                <li>
+                  <a
+                    href="/profile/customize"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
+                    Customize Profile
+                  </a>
+                </li>
+              )}
             </ul>
           </section>
 

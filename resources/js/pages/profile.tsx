@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Head } from '@inertiajs/react';
@@ -49,23 +49,53 @@ interface ProfilePageProps {
   profileiconid: string;
 }
 
+function Spinner() {
+  return (
+    <svg className="animate-spin h-12 w-12 text-blue-600 mx-auto mb-4" viewBox="0 0 24 24">
+      <circle
+        className="opacity-25"
+        cx="12" cy="12" r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+        fill="none"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      />
+    </svg>
+  );
+}
+
 export default function Profile({ data, puuid, summoner, nickname, tagline, region, profileiconid }: ProfilePageProps) {
   const [modalMatch, setModalMatch] = useState<MatchDetail | null>(null);
   const [ddragonVersion, setDdragonVersion] = useState('');
   const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
+  const [matches, setMatches] = useState<MatchDetail[]>(data);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(data.length >= 10);
+  const [initialLoading, setInitialLoading] = useState(true); // NEW
+  const [custom, setCustom] = useState(null);
+  const pageRef = useRef(1);
 
   useEffect(() => {
+    // Simulate loading or fetch ddragonVersion here
+    // When done, setInitialLoading(false);
+    // Example:
     fetch('https://ddragon.leagueoflegends.com/api/versions.json')
       .then(res => res.json())
-      .then((versions: string[]) => {
-        if (versions && versions.length > 0) {
-          setDdragonVersion(versions[0]);
-        }
-      })
-      .catch(() => {
-        setDdragonVersion('15.9.1'); // fallback version
+      .then(versions => {
+        setDdragonVersion(versions[0]);
+        setInitialLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetch(`/api/profile-customization/${puuid}`)
+      .then(res => res.json())
+      .then(setCustom);
+  }, [puuid]);
 
   const stats = useMemo(() => {
     let wins = 0, losses = 0, totalKills = 0, totalDeaths = 0, totalAssists = 0;
@@ -98,11 +128,36 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
       : date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  if (!ddragonVersion) {
+  const loadMoreMatches = async () => {
+    if (loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    try {
+      const res = await fetch(
+        `/api/profile-matches?puuid=${puuid}&region=${region}&page=${pageRef.current + 1}`
+      );
+      if (!res.ok) throw new Error('Failed to load more matches');
+      const json = await res.json();
+      setMatches(prev => [...prev, ...json.matches]);
+      // Only set hasMore to false if the backend returns 0 matches
+      setHasMore(json.matches.length > 0);
+      pageRef.current += 1;
+    } catch (e) {
+      setHasMore(false);
+    }
+    setLoadingMore(false);
+  };
+
+  if (initialLoading || !ddragonVersion) {
     return (
-      <>
-        <p className="p-10 text-center text-lg">Loading game data...</p>
-      </>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background">
+        <Spinner />
+        <p className="text-lg text-center text-gray-700 dark:text-gray-200 px-4">
+          Loading your profile and matches...<br />
+          <span className="text-sm text-gray-500">
+            This may take a while depending on your match history and statistics.
+          </span>
+        </p>
+      </div>
     );
   }
 
@@ -154,7 +209,7 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white/90">Recent Matches</h2>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-            {data.map(match => {
+            {matches.map(match => {
               const player = match.info.participants.find(p => p.puuid === puuid);
               if (!player) return null;
               const isWin = player.win;
@@ -235,6 +290,17 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
               );
             })}
           </div>
+          {hasMore && (
+            <div className="flex justify-center mt-8">
+              <button
+                onClick={loadMoreMatches}
+                disabled={loadingMore}
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold shadow-lg hover:scale-105 transition-all disabled:opacity-60"
+              >
+                {loadingMore ? 'Loading...' : 'Load More Matches'}
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Match Modal */}
@@ -281,7 +347,19 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
           </div>
         )}
       </main>
+            {loadingMore && (
+  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/40">
+    <Spinner />
+    <p className="text-lg text-center text-white px-4">
+      Loading more matches...<br />
+      <span className="text-sm text-gray-200">
+        This may take a while depending on your match history and statistics.
+      </span>
+    </p>
+  </div>
+)}
       <Footer />
+
     </div>
   );
 }

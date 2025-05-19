@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePage, Link } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import AppearanceToggleDropdown from "./appearance-dropdown";
@@ -9,19 +9,24 @@ import logo from '../assets/favicon.svg';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
 
-
 const Navbar = () => {
     const { auth } = usePage().props;
     const getInitials = useInitials();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const closeMobileMenu = () => setIsMenuOpen(false);
+
     return (
         <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b dark:text-white text-black hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b]">
             <div className="container px-4 mx-auto text-sm">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center flex-shrink-0">
-                        <img src={ logo } className="h-10 w-10 mr-2" alt="logo" />
+                        <img src={logo} className="h-10 w-10 mr-2" alt="logo" />
                         <a href="/" className="text-xl tracking-tight"><h1>Statikk Shiv</h1></a>
                     </div>
-                    <div className="flex items-center gap-4">
+                    
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-4">
                         {auth?.user ? (
                             <>
                                 <Link
@@ -47,7 +52,6 @@ const Navbar = () => {
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </>
-                            
                         ) : (
                             <>
                                 <Link
@@ -72,7 +76,87 @@ const Navbar = () => {
                             </>
                         )}
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                        {isMenuOpen ? (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
+                    </button>
                 </div>
+
+                {/* Mobile Menu Dropdown */}
+                {isMenuOpen && (
+                    <div className="md:hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border-b dark:border-gray-700 shadow-lg z-40">
+                        <div className="container px-4 mx-auto py-4">
+                            <div className="flex flex-col gap-4">
+                                {auth?.user ? (
+                                    <>
+                                        <Link
+                                            href={route('searches')}
+                                            onClick={closeMobileMenu}
+                                            className="py-2 px-3 border rounded-md transition-colors duration-150 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                        >
+                                            Hot searches
+                                        </Link>
+                                        <div className="flex items-center justify-between">
+                                            <AppearanceToggleDropdown />
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <Button variant="ghost" className="rounded-full p-1">
+                                                        <Avatar className="size-8">
+                                                            <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                                            <AvatarFallback className="bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                                                {getInitials(auth.user.name)}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                    </Button>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="w-56" align="end">
+                                                    <UserMenuContent user={auth.user} />
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href={route('searches')}
+                                            onClick={closeMobileMenu}
+                                            className="py-2 px-3 border rounded-md transition-colors duration-150 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                        >
+                                            Hot searches
+                                        </Link>
+                                        <Link
+                                            href={route('login')}
+                                            onClick={closeMobileMenu}
+                                            className="py-2 px-3 border rounded-md transition-colors duration-150 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                        >
+                                            Sign in
+                                        </Link>
+                                        <Link
+                                            href={route('register')}
+                                            onClick={closeMobileMenu}
+                                            className="py-2 px-3 rounded-md transition-colors duration-150 bg-gradient-to-r from-[#64ddcd] to-[#3c8277] text-white hover:opacity-90"
+                                        >
+                                            Register
+                                        </Link>
+                                        <AppearanceToggleDropdown />
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </nav>
     );
