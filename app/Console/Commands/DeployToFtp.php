@@ -92,33 +92,6 @@ class DeployToFtp extends Command
         $this->uploadDirectory($conn, $localBuildDir, $remoteBuildDir);
 
         ftp_close($conn);
-        $this->info("✅ FTP upload complete!");
-
-        // 7. Trigger remote deploy.php via HTTPS POST with token
-        $deployUrl = config('ftp.deploy_url'); // e.g. https://yourdomain.com/deploy.php
-        $deployToken = config('ftp.deploy_token'); // store in .env as FTP_DEPLOY_TOKEN
-
-        if ($deployUrl && $deployToken) {
-            $this->info("🔔 Triggering remote deploy.php...");
-            $ch = curl_init($deployUrl);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['token' => $deployToken]));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if ($httpCode === 200) {
-                $this->info("✅ Remote deploy.php triggered successfully.");
-                $this->line($response);
-            } else {
-                $this->error("❌ Failed to trigger deploy.php. HTTP $httpCode");
-                $this->line($response);
-            }
-            curl_close($ch);
-        } else {
-            $this->warn("⚠️  Deploy URL or token not set in config.");
-        }
-
         $this->info("✅ Deployment complete!");
         return 0;
     }
