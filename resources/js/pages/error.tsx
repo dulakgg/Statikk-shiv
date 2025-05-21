@@ -43,7 +43,8 @@ const Error: React.FC<ErrorPlayerProfileProps> = ({
 }) => {
   return (
     <>
-    <Head>
+      <Head>
+        <meta property="og:url" content="https://statikkshiv.com/error" />
         <link rel="canonical" href="https://statikkshiv.com/error" />
       </Head>
       <Navbar />

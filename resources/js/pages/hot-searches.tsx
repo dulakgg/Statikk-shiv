@@ -1,7 +1,7 @@
-import NavBar from '../components/Navbar.jsx'
-import Footer from '../components/Footer.jsx';
-import { useState, useEffect } from 'react';
-import HotSearches from '@/components/HotSearches.js';
+import React, { Suspense, useState, useEffect } from 'react';
+const NavBar = React.lazy(() => import('../components/Navbar.jsx'));
+const Footer = React.lazy(() => import('../components/Footer.jsx'));
+const HotSearches = React.lazy(() => import('@/components/HotSearches.js'));
 import { Head } from '@inertiajs/react';
 
 const LoadingSpinner = () => (
@@ -32,7 +32,6 @@ const LoadingSpinner = () => (
 export default function Search() {
   const [loading, setLoading] = useState(true);
 
-  // Simulate page loading
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1200); // fake delay
     return () => clearTimeout(timer);
@@ -41,11 +40,20 @@ export default function Search() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-black dark:text-white">
       <Head>
+        <meta property="og:url" content="https://statikkshiv.com/hot-searches" />
         <link rel="canonical" href="https://statikkshiv.com/hot-searches" />
       </Head>
-      <NavBar />
-      {loading ? <LoadingSpinner /> : <HotSearches />}
-      <Footer />
+      <Suspense fallback={<div>Loading navigation...</div>}>
+        <NavBar />
+      </Suspense>
+      {loading ? <LoadingSpinner /> : (
+        <Suspense fallback={<div>Loading hot searches...</div>}>
+          <HotSearches />
+        </Suspense>
+      )}
+      <Suspense fallback={<div>Loading footer...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

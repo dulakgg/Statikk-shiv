@@ -158,6 +158,10 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
 
   return (
     <div className="min-h-screen bg-background">
+      <Head>
+        <meta property="og:url" content={`https://statikkshiv.com/profile/${nickname}`} />
+        <link rel="canonical" href={`https://statikkshiv.com/profile`} />
+      </Head>
       <Navbar />
       <main className="container mx-auto pt-20 px-4 pb-12 max-w-7xl">
         {/* Profile Header */}
@@ -340,19 +344,18 @@ export default function Profile({ data, puuid, summoner, nickname, tagline, regi
           </div>
         )}
       </main>
-            {loadingMore && (
-  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/40">
-    <Spinner />
-    <p className="text-lg text-center text-white px-4">
-      Loading more matches...<br />
-      <span className="text-sm text-gray-200">
-        This may take a while depending on your match history and statistics.
-      </span>
-    </p>
-  </div>
-)}
+      {loadingMore && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/40">
+          <Spinner />
+          <p className="text-lg text-center text-white px-4">
+            Loading more matches...<br />
+            <span className="text-sm text-gray-200">
+              This may take a while depending on your match history and statistics.
+            </span>
+          </p>
+        </div>
+      )}
       <Footer />
-
     </div>
   );
 }

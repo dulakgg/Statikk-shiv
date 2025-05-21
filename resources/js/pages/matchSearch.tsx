@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Head } from '@inertiajs/react';
 
 const regions = [
   "br1", "eun1", "euw1", "jp1", "kr", "la1", "la2", "me1", "na1", "oc1", "ru", "sg2", "tr1", "tw2", "vn2"
@@ -23,6 +24,10 @@ export default function MatchSearch() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Head>
+        <meta property="og:url" content="https://statikkshiv.com/match-search" />
+        <link rel="canonical" href="https://statikkshiv.com/match-search" />
+      </Head>
       <Navbar />
       <main className="flex flex-1 flex-col items-center justify-center py-16 px-4">
         <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-lg p-8 max-w-md w-full">

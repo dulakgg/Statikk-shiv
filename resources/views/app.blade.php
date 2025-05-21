@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
     <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ1YPRM31G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        <!-- Preconnect and DNS Prefetch for external resources -->
+        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+        <link rel="dns-prefetch" href="https://fonts.bunny.net">
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
 
-  gtag('config', 'G-ZZ1YPRM31G');
-</script>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KKGLRVDK');</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7865510603035863"
-     crossorigin="anonymous"></script>
+        <!-- Preload main font for faster rendering -->
+        <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap">
+
+        <!-- Favicon with fetchpriority -->
+        <link rel="icon" href="/favicon.svg" loading="lazy" type="image/svg+xml" fetchpriority="high">
+
+        <!-- Google Analytics (async) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ1YPRM31G"></script>
+        <script defer>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ZZ1YPRM31G');
+        </script>
+
+        <!-- Google Tag Manager (defer) -->
+        <script defer>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KKGLRVDK');
+        </script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="keywords"
         content="League of Legends, LoL, gaming stats, LoL player stats, summoner profile lookup, EUNE rank tracker, match history LoL, champion builds 2025, ranked stats analytics, profile search tool" />
-        <meta name="description" content="StatikkShiv: a lightweight real-time LoL companion app offering match info, player & champion stats, and personalized performance tracking.">
-        <script>
+
+        <!-- Appearance Script (defer) -->
+        <script defer>
             (function() {
                 const appearance = '{{ $appearance ?? "system" }}';
-
                 if (appearance === 'system') {
                     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
                     if (prefersDark) {
                         document.documentElement.classList.add('dark');
                     }
@@ -38,19 +52,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             html {
                 background-color: oklch(1 0 0);
             }
-
             html.dark {
                 background-color: oklch(0.145 0 0);
             }
         </style>
         <title>Statikk Shiv</title>
-        <link rel="icon" href="/favicon.svg" loading="lazy" type="image/svg+xml">
-        <link rel="canonical" href="https://statikkshiv.com/" />
-        <link rel="preconnect" href="https://fonts.bunny.net&display=swap">
+        <!-- Use font-display: swap for faster text paint -->
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
+
         <meta property="og:title" content="Statikk shiv" />
         <meta property="og:description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
-        <meta property="og:url" content="https://Statikkshiv.com/" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://statikkshiv.com/favicon.svg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -59,18 +70,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="twitter:image" content="https://statikkshiv.com/favicon.png" />
         <meta name="description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
         @routes
-        <script>
+        <script defer>
             window.routes = {
               profileSearch: "{{ route('profile.search') }}"
             };
-          </script>
+        </script>
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKGLRVDK"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKGLRVDK"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         @inertia
+        <!-- Move ads script to after main content for better LCP -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7865510603035863"
+        crossorigin="anonymous"></script>
     </body>
 </html>

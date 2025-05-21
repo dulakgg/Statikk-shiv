@@ -1,20 +1,29 @@
-import NavBar from '../components/Navbar.jsx';
-import HeroSection from '../components/HeroSection.jsx';
-import Footer from '../components/Footer.jsx';
+import React, { Suspense } from 'react';
 import { Head } from '@inertiajs/react';
-import HotSearches from '@/components/HotSearches.js';
+
+const NavBar = React.lazy(() => import('../components/Navbar.jsx'));
+const Footer = React.lazy(() => import('../components/Footer.jsx'));
+const HeroSection = React.lazy(() => import('../components/HeroSection.jsx'));
 
 export default function Welcome() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-black dark:text-white">
       <Head>
+        <meta name="description" content="Analyze your League of Legends matches, view player statistics, and discover insights with Statikk Shiv. Fast, modern, and privacy-friendly match history and champion stats." />
+        <meta property="og:url" content="https://statikkshiv.com/" />
         <link rel="canonical" href="https://statikkshiv.com/" />
       </Head>
-      <NavBar />
+      <Suspense fallback={<div>Loading navigation...</div>}>
+        <NavBar />
+      </Suspense>
       <main className="flex-grow flex items-center justify-center px-6">
-        <HeroSection />
+        <Suspense fallback={<div>Loading...</div>}>
+          <HeroSection />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={<div>Loading footer...</div>}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

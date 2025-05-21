@@ -35,7 +35,10 @@ export default function Register() {
 
     return (
         <AuthLayout title="Create an account" description="Enter your details below to create your account">
-            <Head title="Register" />
+            <Head>
+                <meta property="og:url" content="https://statikkshiv.com/register" />
+                <link rel="canonical" href="https://statikkshiv.com/register" />
+            </Head>
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
@@ -102,26 +105,26 @@ export default function Register() {
                         <InputError message={errors.password_confirmation} />
                     </div>
                     <div className="px-4 py-3 bg-white dark:bg-gray-800 rounded-md">
-                    <p className="text-sm text-gray-700 dark:text-gray-300">
-                        By clicking <span className="font-semibold">“Create account”</span> you agree to our{' '}
-                        <a
-                        href="/terms"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
-                        >
-                        Terms of Service
-                        </a>
-                        {' '}and{' '}
-                        <a
-                        href="/privacy"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
-                        >
-                        Privacy Policy
-                        </a>.
-                    </p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                            By clicking <span className="font-semibold">“Create account”</span> you agree to our{' '}
+                            <a
+                                href="/terms"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
+                            >
+                                Terms of Service
+                            </a>
+                            {' '}and{' '}
+                            <a
+                                href="/privacy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline dark:text-blue-400 mx-1"
+                            >
+                                Privacy Policy
+                            </a>.
+                        </p>
                     </div>
                     <InputError message={errors.terms} className="mt-2" />
 

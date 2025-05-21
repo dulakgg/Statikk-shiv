@@ -3,6 +3,7 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { resolve } from 'node:path';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
             refresh: true,
         }),
         react(),
+        visualizer(),
         tailwindcss(),
         ViteImageOptimizer({
             png: { quality: 75 },

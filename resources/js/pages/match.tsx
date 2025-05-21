@@ -261,6 +261,10 @@ export default function Match({
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-black dark:text-white">
+      <Head>
+        <meta property="og:url" content={`https://statikkshiv.com/match`} />
+        <link rel="canonical" href={`https://statikkshiv.com/match`} />
+      </Head>
       <NavBar />
       <main className="flex flex-col lg:flex-row items-start container mx-auto px-4 sm:px-6 py-8 gap-8">
         {/* Left: Teams Overview */}
