@@ -21,7 +21,10 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-xs mt-2">
-              The ultimate League of Legends stats & search platform.
+              The ultimate League of Legends stats & search platform. StatikkShiv
+              helps you analyze matches, track your progress, and discover new
+              insights to improve your gameplay. Fast, privacy-friendly, and
+              always up to date with the latest data.
             </p>
           </section>
 

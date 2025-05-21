@@ -13,7 +13,7 @@
         <!-- Favicon with fetchpriority -->
         <link rel="icon" href="/favicon.svg" loading="lazy" type="image/svg+xml" fetchpriority="high">
 
-        <!-- Google Analytics (async) -->
+        <!-- Google Analytics (GA4) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZZ1YPRM31G"></script>
         <script defer>
           window.dataLayer = window.dataLayer || [];
@@ -22,13 +22,18 @@
           gtag('config', 'G-ZZ1YPRM31G');
         </script>
 
-        <!-- Google Tag Manager (defer) -->
+        <!-- Google Tag Manager -->
         <script defer>
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-KKGLRVDK');
+          (function(w,d,s,l,i){
+            w[l]=w[l]||[];
+            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+            var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),
+                dl=l!='dataLayer'?'&l='+l:'';
+            j.async=true;
+            j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+            f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-KKGLRVDK');
         </script>
 
         <meta charset="utf-8">
@@ -56,10 +61,9 @@
                 background-color: oklch(0.145 0 0);
             }
         </style>
-        <title>Statikk Shiv</title>
-        <!-- Use font-display: swap for faster text paint -->
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600&display=swap" rel="stylesheet" />
-
+        <title>Statikk Shiv – League of Legends Match History & Champion Stats Tracker</title>
+        <meta name="description" content="Analyze your League of Legends matches, view player statistics, and discover insights with Statikk Shiv. Fast, modern, and privacy-friendly match history and champion stats." />
         <meta property="og:title" content="Statikk shiv" />
         <meta property="og:description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
         <meta property="og:type" content="website" />
@@ -68,7 +72,6 @@
         <meta name="twitter:title" content="Statikk shiv" />
         <meta name="twitter:description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
         <meta name="twitter:image" content="https://statikkshiv.com/favicon.png" />
-        <meta name="description" content="Statikk Shiv — your ultimate League of Legends stats hub with live match data, player rankings, and in-depth game analytics." />
         @routes
         <script defer>
             window.routes = {

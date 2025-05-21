@@ -9,7 +9,6 @@ export default function Welcome() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-black dark:text-white">
       <Head>
-        <meta name="description" content="Analyze your League of Legends matches, view player statistics, and discover insights with Statikk Shiv. Fast, modern, and privacy-friendly match history and champion stats." />
         <meta property="og:url" content="https://statikkshiv.com/" />
         <link rel="canonical" href="https://statikkshiv.com/" />
       </Head>
