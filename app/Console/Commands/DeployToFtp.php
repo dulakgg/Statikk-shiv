@@ -4,115 +4,203 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class DeployToFtp extends Command
 {
     protected $signature = 'deploy:ftp';
-    protected $description = 'Deploy Laravel to FTP, preserve .env, upload build, and run composer install';
+    protected $description = 'Deploy Laravel files and build folder to FTP, excluding node_modules, vendor, tests and .env';
+
+    // Folders/files to exclude from upload in Laravel root
+    protected $excluded = [
+        'node_modules',
+        'vendor',
+        'tests',
+        '.env',
+        '.git',
+        '.gitignore',
+        '.gitattributes',
+        '.DS_Store',
+        'Thumbs.db',
+    ];
 
     public function handle()
     {
-        // 1. Build frontend assets
-        $this->info("▶ Running npm run build...");
-        $process = Process::fromShellCommandline('npm run build', base_path());
-        $process->setTimeout(300);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        $this->info("✅ Build completed.");
-
-        // 2. Set FTP credentials
         $ftpHost = config('ftp.host');
         $ftpUser = config('ftp.username');
         $ftpPass = config('ftp.password');
 
-        $laravelRemote = 'public_html/laravel';
-        $buildLocal = public_path('build');
-        $buildRemote = 'public_html/build';
+        if (!$ftpHost || !$ftpUser || !$ftpPass) {
+            $this->error('FTP credentials not set.');
+            return 1;
+        }
 
+        // 1. Run npm build inside laravel/public
+        $this->info("🛠 Running npm run build...");
+        $npmBuildPath = base_path('/public');
+
+        $process = Process::fromShellCommandline('npm run build', $npmBuildPath);
+        $process->setTimeout(300);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+
+        if (!$process->isSuccessful()) {
+            $this->error('❌ npm run build failed.');
+            return 1;
+        }
+
+        $localBuildDir = $npmBuildPath . DIRECTORY_SEPARATOR . 'build';
+        if (!is_dir($localBuildDir)) {
+            $this->error("❌ Build folder not found at: $localBuildDir");
+            return 1;
+        }
+        $this->info("✅ npm build finished.");
+
+        // 2. Connect to FTP
         $this->info("🔌 Connecting to FTP...");
         $conn = ftp_connect($ftpHost);
         if (!$conn) {
             $this->error("❌ Could not connect to FTP host.");
-            return;
+            return 1;
         }
-
-        $login = ftp_login($conn, $ftpUser, $ftpPass);
-        if (!$login) {
-            $this->error("❌ Could not login to FTP server.");
+        if (!ftp_login($conn, $ftpUser, $ftpPass)) {
+            $this->error("❌ Could not login to FTP.");
             ftp_close($conn);
-            return;
+            return 1;
         }
-
         ftp_pasv($conn, true);
 
-        // 3. Clean /public_html/laravel except .env
-        $this->info("🧹 Cleaning /public_html/laravel (preserving .env)...");
-        $files = ftp_nlist($conn, $laravelRemote);
-        foreach ($files as $file) {
-            if (basename($file) !== '.env') {
-                $this->deleteRecursive($conn, $file);
-            }
-        }
+        // 3. Delete all files/folders in remote /laravel except .env
+        $remoteLaravelDir = 'laravel'; // Adjust if your remote path is different
 
-        // 4. Upload Laravel app excluding unwanted dirs
-        $this->info("📦 Uploading Laravel project...");
-        $this->uploadDirectory($conn, base_path(), $laravelRemote, [
-            'node_modules', 'vendor', '.git', 'tests', 'storage/logs', '.env'
-        ]);
+        $this->info("🗑 Deleting all files/folders in /$remoteLaravelDir except .env...");
+        $this->deleteRemoteFolderContents($conn, $remoteLaravelDir);
 
-        // 5. Delete old build
-        $this->info("🗑 Deleting old /public_html/build...");
-        $this->deleteRecursive($conn, $buildRemote);
+        // 4. Upload Laravel files/folders except excluded and .env
+        $localLaravelDir = base_path();
+        $this->info("📤 Uploading Laravel files (excluding node_modules, vendor, tests, .env)...");
+        $this->uploadLaravelFiles($conn, $localLaravelDir, $remoteLaravelDir);
 
-        // 6. Upload new build folder
-        $this->info("🚀 Uploading new build to /public_html...");
-        $this->uploadDirectory($conn, $buildLocal, $buildRemote);
+        // 5. Delete old remote build folder first (/public_html/build)
+        $remoteBuildDir = 'build'; // Assuming FTP root is /public_html
 
-        // 7. Trigger composer install remotely (if possible via shell_exec)
-        $this->info("⚙ Running composer install on remote (optional, FTP cannot trigger shell commands).");
-        $this->info("💡 NOTE: To run composer install remotely, you need SSH or a web hook.");
+        $this->info("🗑 Deleting old /public_html/$remoteBuildDir...");
+        $this->deleteRecursive($conn, $remoteBuildDir);
+
+        // 6. Upload build folder from laravel/public/build to /public_html/build
+        $this->info("🚀 Uploading build folder to /public_html/$remoteBuildDir...");
+        $this->uploadDirectory($conn, $localBuildDir, $remoteBuildDir);
 
         ftp_close($conn);
         $this->info("✅ Deployment complete!");
+        return 0;
+    }
+
+    private function deleteRemoteFolderContents($conn, $remoteDir)
+    {
+        $files = @ftp_nlist($conn, $remoteDir);
+        if ($files === false) {
+            $this->info("No files found in $remoteDir to delete.");
+            return;
+        }
+
+        foreach ($files as $file) {
+            $basename = basename($file);
+            if ($basename == '.' || $basename == '..' || $basename == '') continue;
+
+            // Skip deleting .env file
+            if ($basename === '.env') {
+                $this->info("Skipping deletion of .env file");
+                continue;
+            }
+
+            $remotePath = $remoteDir . '/' . $basename;
+
+            $this->deleteRecursive($conn, $remotePath);
+        }
     }
 
     private function deleteRecursive($conn, $path)
     {
-        if (@ftp_delete($conn, $path)) return;
+        // Try to delete as file
+        if (@ftp_delete($conn, $path)) {
+            $this->info("Deleted file: $path");
+            return;
+        }
 
+        // Try as directory
         $files = @ftp_nlist($conn, $path);
         if ($files !== false) {
             foreach ($files as $file) {
                 $basename = basename($file);
-                if ($basename === '.' || $basename === '..') continue;
+                if ($basename == '.' || $basename == '..') continue;
                 $this->deleteRecursive($conn, $file);
             }
         }
-        @ftp_rmdir($conn, $path);
+
+        if (@ftp_rmdir($conn, $path)) {
+            $this->info("Deleted directory: $path");
+        } else {
+            $this->error("Failed to delete: $path");
+        }
     }
 
-    private function uploadDirectory($conn, $localDir, $remoteDir, $exclude = [])
+    private function uploadLaravelFiles($conn, $localDir, $remoteDir)
     {
-        if (!@ftp_chdir($conn, $remoteDir)) {
-            @ftp_mkdir($conn, $remoteDir);
-        }
+        @ftp_mkdir($conn, $remoteDir);
 
-        $items = scandir($localDir);
-        foreach ($items as $item) {
-            if (in_array($item, ['.', '..']) || in_array($item, $exclude)) continue;
+        $files = scandir($localDir);
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') continue;
 
-            $localPath = $localDir . '/' . $item;
-            $remotePath = $remoteDir . '/' . $item;
+            // Skip excluded folders/files
+            if (in_array($file, $this->excluded)) {
+                $this->info("Skipping excluded: $file");
+                continue;
+            }
+
+            $localPath = $localDir . DIRECTORY_SEPARATOR . $file;
+            $remotePath = $remoteDir . '/' . $file;
 
             if (is_dir($localPath)) {
-                $this->uploadDirectory($conn, $localPath, $remotePath, $exclude);
+                $this->uploadLaravelFiles($conn, $localPath, $remotePath);
             } else {
-                ftp_put($conn, $remotePath, $localPath, FTP_BINARY);
+                // Also skip .env to preserve remote .env
+                if ($file === '.env') {
+                    $this->info("Preserving remote .env file, skipping upload.");
+                    continue;
+                }
+
+                $upload = ftp_put($conn, $remotePath, $localPath, FTP_BINARY);
+                if ($upload) {
+                    $this->info("Uploaded file: $remotePath");
+                } else {
+                    $this->error("Failed to upload file: $remotePath");
+                }
+            }
+        }
+    }
+
+    private function uploadDirectory($conn, $localDir, $remoteDir)
+    {
+        @ftp_mkdir($conn, $remoteDir);
+
+        $files = scandir($localDir);
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') continue;
+
+            $localPath = $localDir . DIRECTORY_SEPARATOR . $file;
+            $remotePath = $remoteDir . '/' . $file;
+
+            if (is_dir($localPath)) {
+                $this->uploadDirectory($conn, $localPath, $remotePath);
+            } else {
+                $upload = ftp_put($conn, $remotePath, $localPath, FTP_BINARY);
+                if ($upload) {
+                    $this->info("Uploaded build file: $remotePath");
+                } else {
+                    $this->error("Failed to upload build file: $remotePath");
+                }
             }
         }
     }
