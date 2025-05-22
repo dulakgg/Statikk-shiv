@@ -26,51 +26,27 @@ export default defineConfig({
             svg: {
                 multipass: true,
                 plugins: [
-                    {
-                        name: 'preset-default',
-                        params: {
-                            overrides: {
-                                removeViewBox: false,
-                            },
-                        },
+                {
+                    name: 'preset-default',
+                    params: {
+                    overrides: {
+                        removeViewBox: false,
                     },
-                    {
-                        name: 'sortAttrs',
                     },
+                },
+                {
+                    name: 'sortAttrs',
+                },
                 ],
             },
         }),
     ],
     esbuild: {
         jsx: 'automatic',
-        treeShaking: true,
     },
     resolve: {
         alias: {
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
-        },
-    },
-    build: {
-        target: 'esnext', // Use latest JS features for smaller bundles
-        cssCodeSplit: true, // Split CSS per component/page
-        minify: 'esbuild', // Use esbuild for faster/smaller minification
-        rollupOptions: {
-            output: {
-                manualChunks: {
-                    react: ['react', 'react-dom'],
-                    radix: [
-                        '@radix-ui/react-dialog',
-                        '@radix-ui/react-menu',
-                        '@radix-ui/react-tooltip'
-                    ],
-                    framer: ['framer-motion'],
-                    axios: ['axios'],
-                    floating: ['@floating-ui/react-dom', '@floating-ui/dom'],
-                },
-                chunkFileNames: 'chunks/[name]-[hash].js', // Better chunk caching
-                entryFileNames: 'entry/[name]-[hash].js',
-                assetFileNames: 'assets/[name]-[hash][extname]',
-            },
         },
     },
 });
