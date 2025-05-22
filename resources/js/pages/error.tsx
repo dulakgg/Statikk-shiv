@@ -43,10 +43,6 @@ const Error: React.FC<ErrorPlayerProfileProps> = ({
 }) => {
   return (
     <>
-      <Head>
-        <meta property="og:url" content="https://statikkshiv.com/error" />
-        <link rel="canonical" href="https://statikkshiv.com/error" />
-      </Head>
       <Navbar />
       <main className="min-h-screen flex items-center justify-center bg-background p-4" role="main">
         <section
@@ -78,13 +74,33 @@ const Error: React.FC<ErrorPlayerProfileProps> = ({
           )}
 
           <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-            {loading ? 'Please wait...' : 'Oops!'}
+            {loading ? 'Please wait...' : 'Oops! Page Not Found'}
           </h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
             {loading
               ? 'Fetching data, hang tight.'
               : message}
           </p>
+
+          {!loading && (
+            <div className="mb-6 text-gray-700 dark:text-gray-400 text-base">
+              <p>
+                This page could not be found or there was an error fetching the requested League of Legends data.
+                <br />
+                <strong>StatikkShiv</strong> is your source for LoL stats, match history, player profiles, and item information.
+              </p>
+              <ul className="list-disc list-inside mt-4 text-left text-sm">
+                <li>Check the spelling of the summoner name or item.</li>
+                <li>Try searching again after a few seconds.</li>
+                <li>
+                  Visit our <a href="/" className="text-blue-600 underline hover:text-blue-800">homepage</a> to start a new search.
+                </li>
+              </ul>
+              <p className="mt-4">
+                If you believe this is an error, please contact us or try again later.
+              </p>
+            </div>
+          )}
 
           {!loading && onRetry && (
             <motion.button

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\MatchSearchController;
+use App\Http\Controllers\PatchesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProfileSearchController;
@@ -13,6 +15,9 @@ Route::get('/terms', [TermsController::class, 'index'])
 Route::get('/privacy', [PrivacyController::class, 'index'])
     ->name('privacy');
 
+Route::get('/patch-notes', [PatchesController::class, 'index'])
+    ->name('patches');
+
 Route::get('/profile-search', [ProfileSearchController::class, 'getMatchesParallel'])
      ->name('profile.search');
 
@@ -22,6 +27,10 @@ Route::get('/match', [MatchSearchController::class, 'getMatchesParallel'])
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+
+Route::get('/error', function () {
+    return Inertia::render('error');
+})->name('error');
 
 Route::get('/hot-searches', function () {
     return Inertia::render('hot-searches');

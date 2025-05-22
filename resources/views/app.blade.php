@@ -84,7 +84,7 @@
     </head>
     <body class="font-sans antialiased">
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KKGLRVDK"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+         className="hidden invisible h-0 w-0"></iframe></noscript>
         @inertia
         <!-- Move ads script to after main content for better LCP -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7865510603035863"

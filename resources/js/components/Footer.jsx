@@ -21,10 +21,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-gray-400 max-w-xs mt-2">
-              The ultimate League of Legends stats & search platform. StatikkShiv
-              helps you analyze matches, track your progress, and discover new
-              insights to improve your gameplay. Fast, privacy-friendly, and
-              always up to date with the latest data.
+              This site is not affiliated with or endorsed by Riot Games. League of Legends and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
             </p>
           </section>
 
@@ -34,6 +31,14 @@ export default function Footer() {
               Pages
             </h3>
             <ul className="space-y-2">
+              <li>
+                <a
+                  href="/patch-notes"
+                  className="transition-colors hover:text-[#64ddcd] dark:hover:text-[#64ddcd] font-medium"
+                >
+                  LOL Patch Notes
+                </a>
+              </li>
               <li>
                 <a
                   href="/hot-searches"
